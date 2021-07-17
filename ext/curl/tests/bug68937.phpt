@@ -1,10 +1,7 @@
 --TEST--
 Bug # #68937 (Segfault in curl_multi_exec)
---SKIPIF--
-<?php
-include 'skipif.inc';
-if (getenv('SKIP_ASAN')) die('skip some curl versions leak on longjmp');
-?>
+--EXTENSIONS--
+curl
 --FILE--
 <?php
 

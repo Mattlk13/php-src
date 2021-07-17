@@ -1,7 +1,7 @@
 --TEST--
 openssl_cms_encrypt() tests
---SKIPIF--
-<?php if (!extension_loaded("openssl")) print "skip"; ?>
+--EXTENSIONS--
+openssl
 --FILE--
 <?php
 $infile = __DIR__ . "/plain.txt";
@@ -42,7 +42,7 @@ if (file_exists($outfile2)) {
     unlink($outfile2);
 }
 ?>
---EXPECTF--
+--EXPECT--
 bool(true)
 bool(true)
 bool(true)

@@ -33,14 +33,14 @@ var_dump($rcB->getStaticPropertyValue("publicOverridden"));
 
 echo "\nRetrieving non-existent values from A with no default value:\n";
 try {
-	var_dump($rcA->getStaticPropertyValue("protectedDoesNotExist"));
+    var_dump($rcA->getStaticPropertyValue("protectedDoesNotExist"));
     echo "you should not see this";
 } catch (Exception $e) {
     echo $e->getMessage() . "\n";
 }
 
 try {
-	var_dump($rcA->getStaticPropertyValue("privateDoesNotExist"));
+    var_dump($rcA->getStaticPropertyValue("privateDoesNotExist"));
     echo "you should not see this";
 } catch (Exception $e) {
     echo $e->getMessage() . "\n";
@@ -61,5 +61,5 @@ string(17) "changed protected"
 string(14) "changed public"
 
 Retrieving non-existent values from A with no default value:
-Class A does not have a property named protectedDoesNotExist
-Class A does not have a property named privateDoesNotExist
+Property A::$protectedDoesNotExist does not exist
+Property A::$privateDoesNotExist does not exist

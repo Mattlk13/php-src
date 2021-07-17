@@ -1,7 +1,7 @@
 --TEST--
 openssl_cms_verify() der tests
---SKIPIF--
-<?php if (!extension_loaded("openssl")) print "skip"; ?>
+--EXTENSIONS--
+openssl
 --FILE--
 <?php
 $outfile = tempnam(sys_get_temp_dir(), "ssl");
@@ -47,7 +47,7 @@ if (file_exists($contentfile)) {
 <?php
 unlink(__DIR__ . DIRECTORY_SEPARATOR . '/openssl_cms_verify__pkcsfile.tmp');
 ?>
---EXPECTF--
+--EXPECT--
 bool(false)
 bool(false)
 bool(false)

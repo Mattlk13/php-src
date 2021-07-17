@@ -1,7 +1,7 @@
 --TEST--
 openssl_cms_sign() and openssl_cms_verify() tests
---SKIPIF--
-<?php if (!extension_loaded("openssl")) print "skip"; ?>
+--EXTENSIONS--
+openssl
 --FILE--
 <?php
 $infile = __DIR__ . "/plain.txt";
@@ -35,7 +35,7 @@ if (file_exists($vout)) {
     unlink($vout);
 }
 ?>
---EXPECTF--
+--EXPECT--
 Plain text:
 Now is the winter of our discontent.
 bool(true)

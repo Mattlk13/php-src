@@ -5,7 +5,7 @@
    | This source file is subject to version 3.01 of the PHP license,      |
    | that is bundled with this package in the file LICENSE, and is        |
    | available through the world-wide-web at the following url:           |
-   | http://www.php.net/license/3_01.txt                                  |
+   | https://www.php.net/license/3_01.txt                                 |
    | If you did not receive a copy of the PHP license and are unable to   |
    | obtain it through the world-wide-web, please send a note to          |
    | license@php.net so we can mail you a copy immediately.               |
@@ -70,8 +70,7 @@ static request_rec *php_apache_lookup_uri(char *filename)
 	return ap_sub_req_lookup_uri(filename, ctx->r, ctx->r->output_filters);
 }
 
-/* {{{ proto bool virtual(string uri)
- Perform an apache sub-request */
+/* {{{ Perform an apache sub-request */
 PHP_FUNCTION(virtual)
 {
 	char *filename;
@@ -171,8 +170,7 @@ PHP_FUNCTION(apache_lookup_uri)
 	RETURN_FALSE;
 }
 
-/* {{{ proto array getallheaders(void)
-   Fetch all HTTP request headers */
+/* {{{ Fetch all HTTP request headers */
 PHP_FUNCTION(apache_request_headers)
 {
 	php_struct *ctx;
@@ -195,8 +193,7 @@ PHP_FUNCTION(apache_request_headers)
 }
 /* }}} */
 
-/* {{{ proto array apache_response_headers(void)
-   Fetch all HTTP response headers */
+/* {{{ Fetch all HTTP response headers */
 PHP_FUNCTION(apache_response_headers)
 {
 	php_struct *ctx;
@@ -219,8 +216,7 @@ PHP_FUNCTION(apache_response_headers)
 }
 /* }}} */
 
-/* {{{ proto string apache_note(string note_name [, string note_value])
-   Get and set Apache request notes */
+/* {{{ Get and set Apache request notes */
 PHP_FUNCTION(apache_note)
 {
 	php_struct *ctx;
@@ -228,7 +224,7 @@ PHP_FUNCTION(apache_note)
 	size_t note_name_len, note_val_len;
 	char *old_note_val=NULL;
 
-	if (zend_parse_parameters(ZEND_NUM_ARGS(), "s|s", &note_name, &note_name_len, &note_val, &note_val_len) == FAILURE) {
+	if (zend_parse_parameters(ZEND_NUM_ARGS(), "s|s!", &note_name, &note_name_len, &note_val, &note_val_len) == FAILURE) {
 		RETURN_THROWS();
 	}
 
@@ -249,8 +245,7 @@ PHP_FUNCTION(apache_note)
 /* }}} */
 
 
-/* {{{ proto bool apache_setenv(string variable, string value [, bool walk_to_top])
-   Set an Apache subprocess_env variable */
+/* {{{ Set an Apache subprocess_env variable */
 /*
  * XXX this doesn't look right. shouldn't it be the parent ?*/
 PHP_FUNCTION(apache_setenv)
@@ -258,7 +253,7 @@ PHP_FUNCTION(apache_setenv)
 	php_struct *ctx;
 	char *variable=NULL, *string_val=NULL;
 	size_t variable_len, string_val_len;
-	zend_bool walk_to_top = 0;
+	bool walk_to_top = 0;
 	int arg_count = ZEND_NUM_ARGS();
 	request_rec *r;
 
@@ -283,8 +278,7 @@ PHP_FUNCTION(apache_setenv)
 }
 /* }}} */
 
-/* {{{ proto bool apache_getenv(string variable [, bool walk_to_top])
-   Get an Apache subprocess_env variable */
+/* {{{ Get an Apache subprocess_env variable */
 /*
  * XXX: shouldn't this be the parent not the 'prev'
  */
@@ -293,7 +287,7 @@ PHP_FUNCTION(apache_getenv)
 	php_struct *ctx;
 	char *variable;
 	size_t variable_len;
-	zend_bool walk_to_top = 0;
+	bool walk_to_top = 0;
 	int arg_count = ZEND_NUM_ARGS();
 	char *env_val=NULL;
 	request_rec *r;
@@ -332,8 +326,7 @@ static char *php_apache_get_version()
 #endif
 }
 
-/* {{{ proto string apache_get_version(void)
-   Fetch Apache version */
+/* {{{ Fetch Apache version */
 PHP_FUNCTION(apache_get_version)
 {
 	char *apv = php_apache_get_version();
@@ -346,8 +339,7 @@ PHP_FUNCTION(apache_get_version)
 }
 /* }}} */
 
-/* {{{ proto array apache_get_modules(void)
-   Get a list of loaded Apache modules */
+/* {{{ Get a list of loaded Apache modules */
 PHP_FUNCTION(apache_get_modules)
 {
 	int n;

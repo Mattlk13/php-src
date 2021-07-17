@@ -14,10 +14,6 @@ $input = array(0, 1, -1, 10, 100, 1000, 'Hello', null);
 echo "Anonymous callback function with regular parameter and statement\n";
 var_dump( array_filter($input, function($input) { return ($input > 1); }) );
 
-// anonymous callback function with reference
-echo "Anonymous callback function with reference parameter\n";
-var_dump( array_filter($input, function(&$input) { return ($input < 1); }) );
-
 // anonymous callback function with null argument
 echo "Anonymous callback function with null argument\n";
 var_dump( array_filter($input, function() { return true; }) );
@@ -31,24 +27,15 @@ echo "Done"
 --EXPECT--
 *** Testing array_filter() : usage variations - Anonymous callback functions ***
 Anonymous callback function with regular parameter and statement
-array(3) {
+array(4) {
   [3]=>
   int(10)
   [4]=>
   int(100)
   [5]=>
   int(1000)
-}
-Anonymous callback function with reference parameter
-array(4) {
-  [0]=>
-  int(0)
-  [2]=>
-  int(-1)
   [6]=>
   string(5) "Hello"
-  [7]=>
-  NULL
 }
 Anonymous callback function with null argument
 array(8) {

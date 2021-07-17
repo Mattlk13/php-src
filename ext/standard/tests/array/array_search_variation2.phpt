@@ -12,7 +12,7 @@ $misc_array = array (
   3,
   ".001" =>-67,
   "-.051" =>"k",
-  0.091 =>"-.08",
+  0 =>"-.08",
   "e" =>"5",
   "y" =>NULL,
   NULL =>"",
@@ -58,9 +58,9 @@ int(3)
 bool(false)
 int(3)
 -- Iteration 4 --
-string(3) "key"
+string(1) "y"
 int(2)
-string(3) "key"
+string(1) "y"
 -- Iteration 5 --
 int(3)
 bool(false)
@@ -86,9 +86,9 @@ string(1) "y"
 bool(false)
 string(1) "y"
 -- Iteration 11 --
-int(2)
+int(3)
 bool(false)
-int(2)
+int(3)
 -- Iteration 12 --
 string(1) "y"
 string(0) ""

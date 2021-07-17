@@ -1,5 +1,5 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: dbaaf894f10b6f3c880d08e138dead309f6ed5a4 */
+ * Stub hash: 38936b472d60d9eeb2cc8e35c1276e9f707837bf */
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_zend_version, 0, 0, IS_STRING, 0)
 ZEND_END_ARG_INFO()
@@ -8,25 +8,25 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_func_num_args, 0, 0, IS_LONG, 0)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_func_get_arg, 0, 1, IS_MIXED, 0)
-	ZEND_ARG_TYPE_INFO(0, arg_num, IS_LONG, 0)
+	ZEND_ARG_TYPE_INFO(0, position, IS_LONG, 0)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_func_get_args, 0, 0, IS_ARRAY, 0)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_strlen, 0, 1, IS_LONG, 0)
-	ZEND_ARG_TYPE_INFO(0, str, IS_STRING, 0)
+	ZEND_ARG_TYPE_INFO(0, string, IS_STRING, 0)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_strcmp, 0, 2, IS_LONG, 0)
-	ZEND_ARG_TYPE_INFO(0, str1, IS_STRING, 0)
-	ZEND_ARG_TYPE_INFO(0, str2, IS_STRING, 0)
+	ZEND_ARG_TYPE_INFO(0, string1, IS_STRING, 0)
+	ZEND_ARG_TYPE_INFO(0, string2, IS_STRING, 0)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_strncmp, 0, 3, IS_LONG, 0)
-	ZEND_ARG_TYPE_INFO(0, str1, IS_STRING, 0)
-	ZEND_ARG_TYPE_INFO(0, str2, IS_STRING, 0)
-	ZEND_ARG_TYPE_INFO(0, len, IS_LONG, 0)
+	ZEND_ARG_TYPE_INFO(0, string1, IS_STRING, 0)
+	ZEND_ARG_TYPE_INFO(0, string2, IS_STRING, 0)
+	ZEND_ARG_TYPE_INFO(0, length, IS_LONG, 0)
 ZEND_END_ARG_INFO()
 
 #define arginfo_strcasecmp arginfo_strcmp
@@ -34,12 +34,12 @@ ZEND_END_ARG_INFO()
 #define arginfo_strncasecmp arginfo_strncmp
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_error_reporting, 0, 0, IS_LONG, 0)
-	ZEND_ARG_INFO(0, new_error_level)
+	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, error_level, IS_LONG, 1, "null")
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_define, 0, 2, _IS_BOOL, 0)
 	ZEND_ARG_TYPE_INFO(0, constant_name, IS_STRING, 0)
-	ZEND_ARG_INFO(0, value)
+	ZEND_ARG_TYPE_INFO(0, value, IS_MIXED, 0)
 	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, case_insensitive, _IS_BOOL, 0, "false")
 ZEND_END_ARG_INFO()
 
@@ -54,33 +54,33 @@ ZEND_END_ARG_INFO()
 #define arginfo_get_called_class arginfo_zend_version
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_MASK_EX(arginfo_get_parent_class, 0, 0, MAY_BE_STRING|MAY_BE_FALSE)
-	ZEND_ARG_INFO(0, object)
+	ZEND_ARG_TYPE_MASK(0, object_or_class, MAY_BE_OBJECT|MAY_BE_STRING, NULL)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_is_subclass_of, 0, 2, _IS_BOOL, 0)
-	ZEND_ARG_INFO(0, object)
-	ZEND_ARG_TYPE_INFO(0, class_name, IS_STRING, 0)
+	ZEND_ARG_TYPE_INFO(0, object_or_class, IS_MIXED, 0)
+	ZEND_ARG_TYPE_INFO(0, class, IS_STRING, 0)
 	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, allow_string, _IS_BOOL, 0, "true")
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_is_a, 0, 2, _IS_BOOL, 0)
-	ZEND_ARG_INFO(0, object)
-	ZEND_ARG_TYPE_INFO(0, class_name, IS_STRING, 0)
+	ZEND_ARG_TYPE_INFO(0, object_or_class, IS_MIXED, 0)
+	ZEND_ARG_TYPE_INFO(0, class, IS_STRING, 0)
 	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, allow_string, _IS_BOOL, 0, "false")
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_MASK_EX(arginfo_get_class_vars, 0, 1, MAY_BE_ARRAY|MAY_BE_FALSE)
-	ZEND_ARG_TYPE_INFO(0, class_name, IS_STRING, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_get_class_vars, 0, 1, IS_ARRAY, 0)
+	ZEND_ARG_TYPE_INFO(0, class, IS_STRING, 0)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_get_object_vars, 0, 1, IS_ARRAY, 0)
-	ZEND_ARG_TYPE_INFO(0, obj, IS_OBJECT, 0)
+	ZEND_ARG_TYPE_INFO(0, object, IS_OBJECT, 0)
 ZEND_END_ARG_INFO()
 
 #define arginfo_get_mangled_object_vars arginfo_get_object_vars
 
-ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_get_class_methods, 0, 1, IS_ARRAY, 1)
-	ZEND_ARG_INFO(0, class)
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_get_class_methods, 0, 1, IS_ARRAY, 0)
+	ZEND_ARG_TYPE_MASK(0, object_or_class, MAY_BE_OBJECT|MAY_BE_STRING, NULL)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_method_exists, 0, 2, _IS_BOOL, 0)
@@ -90,28 +90,36 @@ ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_property_exists, 0, 2, _IS_BOOL, 0)
 	ZEND_ARG_INFO(0, object_or_class)
-	ZEND_ARG_TYPE_INFO(0, property_name, IS_STRING, 0)
+	ZEND_ARG_TYPE_INFO(0, property, IS_STRING, 0)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_exists, 0, 1, _IS_BOOL, 0)
-	ZEND_ARG_TYPE_INFO(0, classname, IS_STRING, 0)
+	ZEND_ARG_TYPE_INFO(0, class, IS_STRING, 0)
 	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, autoload, _IS_BOOL, 0, "true")
 ZEND_END_ARG_INFO()
 
-#define arginfo_interface_exists arginfo_class_exists
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_interface_exists, 0, 1, _IS_BOOL, 0)
+	ZEND_ARG_TYPE_INFO(0, interface, IS_STRING, 0)
+	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, autoload, _IS_BOOL, 0, "true")
+ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_trait_exists, 0, 1, _IS_BOOL, 0)
-	ZEND_ARG_TYPE_INFO(0, traitname, IS_STRING, 0)
+	ZEND_ARG_TYPE_INFO(0, trait, IS_STRING, 0)
+	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, autoload, _IS_BOOL, 0, "true")
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_enum_exists, 0, 1, _IS_BOOL, 0)
+	ZEND_ARG_TYPE_INFO(0, enum, IS_STRING, 0)
 	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, autoload, _IS_BOOL, 0, "true")
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_function_exists, 0, 1, _IS_BOOL, 0)
-	ZEND_ARG_TYPE_INFO(0, function_name, IS_STRING, 0)
+	ZEND_ARG_TYPE_INFO(0, function, IS_STRING, 0)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_alias, 0, 2, _IS_BOOL, 0)
-	ZEND_ARG_TYPE_INFO(0, user_class_name, IS_STRING, 0)
-	ZEND_ARG_TYPE_INFO(0, alias_name, IS_STRING, 0)
+	ZEND_ARG_TYPE_INFO(0, class, IS_STRING, 0)
+	ZEND_ARG_TYPE_INFO(0, alias, IS_STRING, 0)
 	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, autoload, _IS_BOOL, 0, "true")
 ZEND_END_ARG_INFO()
 
@@ -121,21 +129,21 @@ ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_trigger_error, 0, 1, _IS_BOOL, 0)
 	ZEND_ARG_TYPE_INFO(0, message, IS_STRING, 0)
-	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, error_type, IS_LONG, 0, "E_USER_NOTICE")
+	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, error_level, IS_LONG, 0, "E_USER_NOTICE")
 ZEND_END_ARG_INFO()
 
 #define arginfo_user_error arginfo_trigger_error
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_set_error_handler, 0, 0, 1)
-	ZEND_ARG_INFO(0, error_handler)
-	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, error_types, IS_LONG, 0, "E_ALL")
+	ZEND_ARG_TYPE_INFO(0, callback, IS_CALLABLE, 1)
+	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, error_levels, IS_LONG, 0, "E_ALL")
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_restore_error_handler, 0, 0, _IS_BOOL, 0)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_set_exception_handler, 0, 0, 1)
-	ZEND_ARG_INFO(0, exception_handler)
+	ZEND_ARG_TYPE_INFO(0, callback, IS_CALLABLE, 1)
 ZEND_END_ARG_INFO()
 
 #define arginfo_restore_exception_handler arginfo_restore_error_handler
@@ -153,15 +161,15 @@ ZEND_END_ARG_INFO()
 #define arginfo_get_defined_vars arginfo_func_get_args
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_get_resource_type, 0, 1, IS_STRING, 0)
-	ZEND_ARG_INFO(0, res)
+	ZEND_ARG_INFO(0, resource)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_get_resource_id, 0, 1, IS_LONG, 0)
-	ZEND_ARG_INFO(0, res)
+	ZEND_ARG_INFO(0, resource)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_get_resources, 0, 0, IS_ARRAY, 0)
-	ZEND_ARG_TYPE_INFO(0, type, IS_STRING, 0)
+	ZEND_ARG_TYPE_INFO_WITH_DEFAULT_VALUE(0, type, IS_STRING, 1, "null")
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_get_loaded_extensions, 0, 0, IS_ARRAY, 0)
@@ -183,11 +191,11 @@ ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_debug_print_backtrace, 0, 0, IS_
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_extension_loaded, 0, 1, _IS_BOOL, 0)
-	ZEND_ARG_TYPE_INFO(0, extension_name, IS_STRING, 0)
+	ZEND_ARG_TYPE_INFO(0, extension, IS_STRING, 0)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_MASK_EX(arginfo_get_extension_funcs, 0, 1, MAY_BE_ARRAY|MAY_BE_FALSE)
-	ZEND_ARG_TYPE_INFO(0, extension_name, IS_STRING, 0)
+	ZEND_ARG_TYPE_INFO(0, extension, IS_STRING, 0)
 ZEND_END_ARG_INFO()
 
 #if ZEND_DEBUG && defined(ZTS)
@@ -235,6 +243,7 @@ ZEND_FUNCTION(property_exists);
 ZEND_FUNCTION(class_exists);
 ZEND_FUNCTION(interface_exists);
 ZEND_FUNCTION(trait_exists);
+ZEND_FUNCTION(enum_exists);
 ZEND_FUNCTION(function_exists);
 ZEND_FUNCTION(class_alias);
 ZEND_FUNCTION(get_included_files);
@@ -295,6 +304,7 @@ static const zend_function_entry ext_functions[] = {
 	ZEND_FE(class_exists, arginfo_class_exists)
 	ZEND_FE(interface_exists, arginfo_interface_exists)
 	ZEND_FE(trait_exists, arginfo_trait_exists)
+	ZEND_FE(enum_exists, arginfo_enum_exists)
 	ZEND_FE(function_exists, arginfo_function_exists)
 	ZEND_FE(class_alias, arginfo_class_alias)
 	ZEND_FE(get_included_files, arginfo_get_included_files)
@@ -330,3 +340,18 @@ static const zend_function_entry ext_functions[] = {
 	ZEND_FE(gc_status, arginfo_gc_status)
 	ZEND_FE_END
 };
+
+
+static const zend_function_entry class_stdClass_methods[] = {
+	ZEND_FE_END
+};
+
+static zend_class_entry *register_class_stdClass(void)
+{
+	zend_class_entry ce, *class_entry;
+
+	INIT_CLASS_ENTRY(ce, "stdClass", class_stdClass_methods);
+	class_entry = zend_register_internal_class_ex(&ce, NULL);
+
+	return class_entry;
+}

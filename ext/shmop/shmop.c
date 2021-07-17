@@ -7,7 +7,7 @@
    | This source file is subject to version 3.01 of the PHP license,      |
    | that is bundled with this package in the file LICENSE, and is        |
    | available through the world-wide-web at the following url:           |
-   | http://www.php.net/license/3_01.txt                                  |
+   | https://www.php.net/license/3_01.txt                                 |
    | If you did not receive a copy of the PHP license and are unable to   |
    | obtain it through the world-wide-web, please send a note to          |
    | license@php.net so we can mail you a copy immediately.               |
@@ -39,8 +39,7 @@
 
 #include "ext/standard/info.h"
 
-/* {{{ shmop_module_entry
- */
+/* {{{ shmop_module_entry */
 zend_module_entry shmop_module_entry = {
 	STANDARD_MODULE_HEADER,
 	"shmop",
@@ -67,7 +66,7 @@ typedef struct php_shmop
 	int shmatflg;
 	char *addr;
 	zend_long size;
-  zend_object std;
+	zend_object std;
 } php_shmop;
 
 zend_class_entry *shmop_ce;
@@ -106,14 +105,10 @@ static void shmop_free_obj(zend_object *object)
 	zend_object_std_dtor(&shmop->std);
 }
 
-/* {{{ PHP_MINIT_FUNCTION
- */
+/* {{{ PHP_MINIT_FUNCTION */
 PHP_MINIT_FUNCTION(shmop)
 {
-	zend_class_entry ce;
-	INIT_CLASS_ENTRY(ce, "Shmop", class_Shmop_methods);
-	shmop_ce = zend_register_internal_class(&ce);
-	shmop_ce->ce_flags |= ZEND_ACC_FINAL | ZEND_ACC_NO_DYNAMIC_PROPERTIES;
+	shmop_ce = register_class_Shmop();
 	shmop_ce->create_object = shmop_create_object;
 	shmop_ce->serialize = zend_class_serialize_deny;
 	shmop_ce->unserialize = zend_class_unserialize_deny;
@@ -123,13 +118,13 @@ PHP_MINIT_FUNCTION(shmop)
 	shmop_object_handlers.free_obj = shmop_free_obj;
 	shmop_object_handlers.get_constructor = shmop_get_constructor;
 	shmop_object_handlers.clone_obj = NULL;
+	shmop_object_handlers.compare = zend_objects_not_comparable;
 
 	return SUCCESS;
 }
 /* }}} */
 
-/* {{{ PHP_MINFO_FUNCTION
- */
+/* {{{ PHP_MINFO_FUNCTION */
 PHP_MINFO_FUNCTION(shmop)
 {
 	php_info_print_table_start();
@@ -138,8 +133,7 @@ PHP_MINFO_FUNCTION(shmop)
 }
 /* }}} */
 
-/* {{{ proto Shmop shmop_open(int key, string flags, int mode, int size)
-   gets and attaches a shared memory segment */
+/* {{{ gets and attaches a shared memory segment */
 PHP_FUNCTION(shmop_open)
 {
 	zend_long key, mode, size;
@@ -153,8 +147,8 @@ PHP_FUNCTION(shmop_open)
 	}
 
 	if (flags_len != 1) {
-		php_error_docref(NULL, E_WARNING, "%s is not a valid flag", flags);
-		RETURN_FALSE;
+		zend_argument_value_error(2, "must be a valid access mode");
+		RETURN_THROWS();
 	}
 
 	object_init_ex(return_value, shmop_ce);
@@ -182,35 +176,35 @@ PHP_FUNCTION(shmop_open)
 			*/
 			break;
 		default:
-			php_error_docref(NULL, E_WARNING, "Invalid access mode");
+			zend_argument_value_error(2, "must be a valid access mode");
 			goto err;
 	}
 
 	if (shmop->shmflg & IPC_CREAT && shmop->size < 1) {
-		php_error_docref(NULL, E_WARNING, "Shared memory segment size must be greater than zero");
+		zend_argument_value_error(4, "must be greater than 0 for the \"c\" and \"n\" access modes");
 		goto err;
 	}
 
 	shmop->shmid = shmget(shmop->key, shmop->size, shmop->shmflg);
 	if (shmop->shmid == -1) {
-		php_error_docref(NULL, E_WARNING, "Unable to attach or create shared memory segment '%s'", strerror(errno));
+		php_error_docref(NULL, E_WARNING, "Unable to attach or create shared memory segment \"%s\"", strerror(errno));
 		goto err;
 	}
 
 	if (shmctl(shmop->shmid, IPC_STAT, &shm)) {
 		/* please do not add coverage here: the segment would be leaked and impossible to delete via php */
-		php_error_docref(NULL, E_WARNING, "Unable to get shared memory segment information '%s'", strerror(errno));
+		php_error_docref(NULL, E_WARNING, "Unable to get shared memory segment information \"%s\"", strerror(errno));
 		goto err;
 	}
 
 	if (shm.shm_segsz > ZEND_LONG_MAX) {
-		php_error_docref(NULL, E_WARNING, "shared memory segment too large to attach");
+		zend_argument_value_error(4, "is too large");
 		goto err;
 	}
 
 	shmop->addr = shmat(shmop->shmid, 0, shmop->shmatflg);
 	if (shmop->addr == (char*) -1) {
-		php_error_docref(NULL, E_WARNING, "Unable to attach to shared memory segment '%s'", strerror(errno));
+		php_error_docref(NULL, E_WARNING, "Unable to attach to shared memory segment \"%s\"", strerror(errno));
 		goto err;
 	}
 
@@ -223,8 +217,7 @@ err:
 }
 /* }}} */
 
-/* {{{ proto string shmop_read(Shmop shmid, int start, int count)
-   reads from a shm segment */
+/* {{{ reads from a shm segment */
 PHP_FUNCTION(shmop_read)
 {
 	zval *shmid;
@@ -241,13 +234,13 @@ PHP_FUNCTION(shmop_read)
 	shmop = Z_SHMOP_P(shmid);
 
 	if (start < 0 || start > shmop->size) {
-		php_error_docref(NULL, E_WARNING, "Start is out of range");
-		RETURN_FALSE;
+		zend_argument_value_error(2, "must be between 0 and the segment size");
+		RETURN_THROWS();
 	}
 
 	if (count < 0 || start > (INT_MAX - count) || start + count > shmop->size) {
-		php_error_docref(NULL, E_WARNING, "Count is out of range");
-		RETURN_FALSE;
+		zend_argument_value_error(3, "is out of range");
+		RETURN_THROWS();
 	}
 
 	startaddr = shmop->addr + start;
@@ -259,8 +252,7 @@ PHP_FUNCTION(shmop_read)
 }
 /* }}} */
 
-/* {{{ proto void shmop_close(Shmop shmid)
-   used to close a shared memory segment; now a NOP */
+/* {{{ used to close a shared memory segment; now a NOP */
 PHP_FUNCTION(shmop_close)
 {
 	zval *shmid;
@@ -271,8 +263,7 @@ PHP_FUNCTION(shmop_close)
 }
 /* }}} */
 
-/* {{{ proto int shmop_size(Shmop shmid)
-   returns the shm size */
+/* {{{ returns the shm size */
 PHP_FUNCTION(shmop_size)
 {
 	zval *shmid;
@@ -288,8 +279,7 @@ PHP_FUNCTION(shmop_size)
 }
 /* }}} */
 
-/* {{{ proto int shmop_write(Shmop shmid, string data, int offset)
-   writes to a shared memory segment */
+/* {{{ writes to a shared memory segment */
 PHP_FUNCTION(shmop_write)
 {
 	php_shmop *shmop;
@@ -305,13 +295,13 @@ PHP_FUNCTION(shmop_write)
 	shmop = Z_SHMOP_P(shmid);
 
 	if ((shmop->shmatflg & SHM_RDONLY) == SHM_RDONLY) {
-		php_error_docref(NULL, E_WARNING, "Trying to write to a read only segment");
-		RETURN_FALSE;
+		zend_throw_error(NULL, "Read-only segment cannot be written");
+		RETURN_THROWS();
 	}
 
 	if (offset < 0 || offset > shmop->size) {
-		php_error_docref(NULL, E_WARNING, "Offset out of range");
-		RETURN_FALSE;
+		zend_argument_value_error(3, "is out of range");
+		RETURN_THROWS();
 	}
 
 	writesize = ((zend_long)ZSTR_LEN(data) < shmop->size - offset) ? (zend_long)ZSTR_LEN(data) : shmop->size - offset;
@@ -321,8 +311,7 @@ PHP_FUNCTION(shmop_write)
 }
 /* }}} */
 
-/* {{{ proto bool shmop_delete(Shmop shmid)
-   mark segment for deletion */
+/* {{{ mark segment for deletion */
 PHP_FUNCTION(shmop_delete)
 {
 	zval *shmid;

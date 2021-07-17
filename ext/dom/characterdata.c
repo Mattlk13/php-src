@@ -5,7 +5,7 @@
    | This source file is subject to version 3.01 of the PHP license,      |
    | that is bundled with this package in the file LICENSE, and is        |
    | available through the world-wide-web at the following url:           |
-   | http://www.php.net/license/3_01.txt                                  |
+   | https://www.php.net/license/3_01.txt                                 |
    | If you did not receive a copy of the PHP license and are unable to   |
    | obtain it through the world-wide-web, please send a note to          |
    | license@php.net so we can mail you a copy immediately.               |
@@ -41,7 +41,7 @@ int dom_characterdata_data_read(dom_object *obj, zval *retval)
 	xmlChar *content;
 
 	if (nodep == NULL) {
-		php_dom_throw_error(INVALID_STATE_ERR, 0);
+		php_dom_throw_error(INVALID_STATE_ERR, 1);
 		return FAILURE;
 	}
 
@@ -61,7 +61,7 @@ int dom_characterdata_data_write(dom_object *obj, zval *newval)
 	zend_string *str;
 
 	if (nodep == NULL) {
-		php_dom_throw_error(INVALID_STATE_ERR, 0);
+		php_dom_throw_error(INVALID_STATE_ERR, 1);
 		return FAILURE;
 	}
 
@@ -90,7 +90,7 @@ int dom_characterdata_length_read(dom_object *obj, zval *retval)
 	long length = 0;
 
 	if (nodep == NULL) {
-		php_dom_throw_error(INVALID_STATE_ERR, 0);
+		php_dom_throw_error(INVALID_STATE_ERR, 1);
 		return FAILURE;
 	}
 
@@ -108,8 +108,7 @@ int dom_characterdata_length_read(dom_object *obj, zval *retval)
 
 /* }}} */
 
-/* {{{ proto string dom_characterdata_substring_data(int offset, int count);
-URL: http://www.w3.org/TR/2003/WD-DOM-Level-3-Core-20030226/DOM3-Core.html#core-ID-6531BCCF
+/* {{{ URL: http://www.w3.org/TR/2003/WD-DOM-Level-3-Core-20030226/DOM3-Core.html#core-ID-6531BCCF
 Since:
 */
 PHP_METHOD(DOMCharacterData, substringData)
@@ -158,8 +157,7 @@ PHP_METHOD(DOMCharacterData, substringData)
 }
 /* }}} end dom_characterdata_substring_data */
 
-/* {{{ proto void dom_characterdata_append_data(string arg);
-URL: http://www.w3.org/TR/2003/WD-DOM-Level-3-Core-20030226/DOM3-Core.html#core-ID-32791A2F
+/* {{{ URL: http://www.w3.org/TR/2003/WD-DOM-Level-3-Core-20030226/DOM3-Core.html#core-ID-32791A2F
 Since:
 */
 PHP_METHOD(DOMCharacterData, appendData)
@@ -181,8 +179,7 @@ PHP_METHOD(DOMCharacterData, appendData)
 }
 /* }}} end dom_characterdata_append_data */
 
-/* {{{ proto void dom_characterdata_insert_data(int offset, string arg);
-URL: http://www.w3.org/TR/2003/WD-DOM-Level-3-Core-20030226/DOM3-Core.html#core-ID-3EDB695F
+/* {{{ URL: http://www.w3.org/TR/2003/WD-DOM-Level-3-Core-20030226/DOM3-Core.html#core-ID-3EDB695F
 Since:
 */
 PHP_METHOD(DOMCharacterData, insertData)
@@ -231,8 +228,7 @@ PHP_METHOD(DOMCharacterData, insertData)
 }
 /* }}} end dom_characterdata_insert_data */
 
-/* {{{ proto void dom_characterdata_delete_data(int offset, int count);
-URL: http://www.w3.org/TR/2003/WD-DOM-Level-3-Core-20030226/DOM3-Core.html#core-ID-7C603781
+/* {{{ URL: http://www.w3.org/TR/2003/WD-DOM-Level-3-Core-20030226/DOM3-Core.html#core-ID-7C603781
 Since:
 */
 PHP_METHOD(DOMCharacterData, deleteData)
@@ -287,8 +283,7 @@ PHP_METHOD(DOMCharacterData, deleteData)
 }
 /* }}} end dom_characterdata_delete_data */
 
-/* {{{ proto void dom_characterdata_replace_data(int offset, int count, string arg);
-URL: http://www.w3.org/TR/2003/WD-DOM-Level-3-Core-20030226/DOM3-Core.html#core-ID-E5CBA7FB
+/* {{{ URL: http://www.w3.org/TR/2003/WD-DOM-Level-3-Core-20030226/DOM3-Core.html#core-ID-E5CBA7FB
 Since:
 */
 PHP_METHOD(DOMCharacterData, replaceData)
@@ -354,9 +349,8 @@ PHP_METHOD(DOMCharacterData, replaceData)
 PHP_METHOD(DOMCharacterData, remove)
 {
 	zval *id = ZEND_THIS;
-	xmlNodePtr children, child;
+	xmlNodePtr child;
 	dom_object *intern;
-	int stricterror;
 
 	if (zend_parse_parameters_none() == FAILURE) {
 		RETURN_THROWS();
@@ -364,38 +358,7 @@ PHP_METHOD(DOMCharacterData, remove)
 
 	DOM_GET_OBJ(child, id, xmlNodePtr, intern);
 
-	if (dom_node_children_valid(child) == FAILURE) {
-		RETURN_NULL();
-	}
-
-	stricterror = dom_get_strict_error(intern->document);
-
-	if (dom_node_is_read_only(child) == SUCCESS ||
-		(child->parent != NULL && dom_node_is_read_only(child->parent) == SUCCESS)) {
-		php_dom_throw_error(NO_MODIFICATION_ALLOWED_ERR, stricterror);
-		RETURN_NULL();
-	}
-
-	if (!child->parent) {
-		php_dom_throw_error(NOT_FOUND_ERR, stricterror);
-		RETURN_NULL();
-	}
-
-	children = child->parent->children;
-	if (!children) {
-		php_dom_throw_error(NOT_FOUND_ERR, stricterror);
-		RETURN_NULL();
-	}
-
-	while (children) {
-		if (children == child) {
-			xmlUnlinkNode(child);
-			RETURN_NULL();
-		}
-		children = children->next;
-	}
-
-	php_dom_throw_error(NOT_FOUND_ERR, stricterror);
+	dom_child_node_remove(intern);
 	RETURN_NULL();
 }
 

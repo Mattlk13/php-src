@@ -1,11 +1,8 @@
 --TEST--
 General semaphore and shared memory test
---SKIPIF--
-<?php
-if(!extension_loaded('sysvsem') || !extension_loaded('sysvshm')) {
-	die("skip Both sysvsem and sysvshm required");
-}
-?>
+--EXTENSIONS--
+sysvsem
+sysvshm
 --FILE--
 <?php
 $MEMSIZE = 512;  //  size of shared memory to allocate
@@ -91,13 +88,8 @@ if (sem_remove($sem_id)) {
     echo "Fail to remove semaphore from SysV.\n";
 }
 echo "End.\n";
-/* NOTE: assigned semids differ depending on the kernel, since
- *       there are actually 3 semaphores per PHP-created
- *       semaphores in effect, to keep state information.
- *       That's the reason for EXPECTF.
- */
 ?>
---EXPECTF--
+--EXPECT--
 Start.
 Got semaphore.
 Success acquire semaphore.

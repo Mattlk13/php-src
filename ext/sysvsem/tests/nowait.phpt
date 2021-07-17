@@ -1,11 +1,8 @@
 --TEST--
 Test sem_acquire with nowait option
---SKIPIF--
-<?php
-if(!extension_loaded('sysvsem') || !extension_loaded('pcntl')) {
-	die("skip sysvsem and pcntl required");
-}
-?>
+--EXTENSIONS--
+sysvsem
+pcntl
 --FILE--
 <?php
 $P_SEMKEY = ftok(__FILE__, 'P');  //  Parent Semaphore key
@@ -118,7 +115,7 @@ if ($pid) {
 }
 
 ?>
---EXPECTF--
+--EXPECT--
 P: parent process running.
 P: got semaphore.
 P: acquired semaphore.

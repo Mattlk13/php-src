@@ -1,9 +1,7 @@
 --TEST--
 Test mb_substitute_character() function : usage variation
---SKIPIF--
-<?php
-extension_loaded('mbstring') or die('skip');
-?>
+--EXTENSIONS--
+mbstring
 --FILE--
 <?php
 declare(strict_types=1);
@@ -149,17 +147,17 @@ TypeError: mb_substitute_character(): Argument #1 ($substitute_character) must b
 --uppercase FALSE--
 TypeError: mb_substitute_character(): Argument #1 ($substitute_character) must be of type string|int|null, bool given
 --empty string DQ--
-ValueError: mb_substitute_character(): Argument #1 ($substitute_character) must be 'none', 'long', 'entity' or a valid codepoint
+ValueError: mb_substitute_character(): Argument #1 ($substitute_character) must be "none", "long", "entity" or a valid codepoint
 --empty string SQ--
-ValueError: mb_substitute_character(): Argument #1 ($substitute_character) must be 'none', 'long', 'entity' or a valid codepoint
+ValueError: mb_substitute_character(): Argument #1 ($substitute_character) must be "none", "long", "entity" or a valid codepoint
 --string DQ--
-ValueError: mb_substitute_character(): Argument #1 ($substitute_character) must be 'none', 'long', 'entity' or a valid codepoint
+ValueError: mb_substitute_character(): Argument #1 ($substitute_character) must be "none", "long", "entity" or a valid codepoint
 --string SQ--
-ValueError: mb_substitute_character(): Argument #1 ($substitute_character) must be 'none', 'long', 'entity' or a valid codepoint
+ValueError: mb_substitute_character(): Argument #1 ($substitute_character) must be "none", "long", "entity" or a valid codepoint
 --mixed case string--
-ValueError: mb_substitute_character(): Argument #1 ($substitute_character) must be 'none', 'long', 'entity' or a valid codepoint
+ValueError: mb_substitute_character(): Argument #1 ($substitute_character) must be "none", "long", "entity" or a valid codepoint
 --heredoc--
-ValueError: mb_substitute_character(): Argument #1 ($substitute_character) must be 'none', 'long', 'entity' or a valid codepoint
+ValueError: mb_substitute_character(): Argument #1 ($substitute_character) must be "none", "long", "entity" or a valid codepoint
 --instance of classWithToString--
 TypeError: mb_substitute_character(): Argument #1 ($substitute_character) must be of type string|int|null, classWithToString given
 --instance of classWithoutToString--

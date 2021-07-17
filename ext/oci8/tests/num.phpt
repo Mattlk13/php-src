@@ -1,7 +1,7 @@
 --TEST--
 oci_num_*() family
---SKIPIF--
-<?php if (!extension_loaded('oci8')) die("skip no oci8 extension"); ?>
+--EXTENSIONS--
+oci8
 --FILE--
 <?php
 
@@ -137,7 +137,7 @@ oci8_test_sql_execute($c, $stmtarray);
 echo "Done\n";
 
 ?>
---EXPECTF--
+--EXPECT--
 Test 1
 int(0)
 int(0)

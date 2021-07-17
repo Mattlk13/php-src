@@ -25,7 +25,11 @@ echo "Argument is name of class which has no methods:\n";
 var_dump( get_class_methods("D") );
 
 echo "Argument is non existent class:\n";
-var_dump( get_class_methods("NonExistent") );
+try {
+    var_dump( get_class_methods("NonExistent") );
+} catch (TypeError $exception) {
+    echo $exception->getMessage() . "\n";
+}
 
 echo "Done";
 ?>
@@ -53,5 +57,5 @@ Argument is name of class which has no methods:
 array(0) {
 }
 Argument is non existent class:
-NULL
+get_class_methods(): Argument #1 ($object_or_class) must be an object or a valid class name, string given
 Done

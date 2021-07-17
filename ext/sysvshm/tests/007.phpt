@@ -1,8 +1,10 @@
 --TEST--
 shm_remove() tests
+--EXTENSIONS--
+sysvshm
 --SKIPIF--
 <?php
-if (!extension_loaded("sysvshm")){ print 'skip'; }
+
 if (!function_exists('ftok')){ print 'skip'; }
 ?>
 --FILE--
@@ -22,7 +24,7 @@ try {
 
 echo "Done\n";
 ?>
---EXPECTF--
+--EXPECT--
 bool(true)
 Shared memory block has already been destroyed
 Done

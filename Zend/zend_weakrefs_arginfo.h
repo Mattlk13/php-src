@@ -1,22 +1,23 @@
 /* This is a generated file, edit the .stub.php file instead.
- * Stub hash: 7ce222b1a257fc3d524dc5cd123ac102a0dca2bc */
+ * Stub hash: 97fff017125955a3def85d9ed5a31746de7b808a */
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_class_WeakReference___construct, 0, 0, 0)
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_WeakReference_create, 0, 0, WeakReference, 0)
+ZEND_BEGIN_ARG_WITH_RETURN_OBJ_INFO_EX(arginfo_class_WeakReference_create, 0, 1, WeakReference, 0)
+	ZEND_ARG_TYPE_INFO(0, object, IS_OBJECT, 0)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_WeakReference_get, 0, 0, IS_OBJECT, 1)
 ZEND_END_ARG_INFO()
 
-ZEND_BEGIN_ARG_INFO_EX(arginfo_class_WeakMap_offsetGet, 0, 0, 1)
+ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_WeakMap_offsetGet, 0, 1, IS_MIXED, 0)
 	ZEND_ARG_INFO(0, object)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_WeakMap_offsetSet, 0, 2, IS_VOID, 0)
 	ZEND_ARG_INFO(0, object)
-	ZEND_ARG_INFO(0, value)
+	ZEND_ARG_TYPE_INFO(0, value, IS_MIXED, 0)
 ZEND_END_ARG_INFO()
 
 ZEND_BEGIN_ARG_WITH_RETURN_TYPE_INFO_EX(arginfo_class_WeakMap_offsetExists, 0, 1, _IS_BOOL, 0)
@@ -62,3 +63,26 @@ static const zend_function_entry class_WeakMap_methods[] = {
 	ZEND_ME(WeakMap, getIterator, arginfo_class_WeakMap_getIterator, ZEND_ACC_PUBLIC)
 	ZEND_FE_END
 };
+
+static zend_class_entry *register_class_WeakReference(void)
+{
+	zend_class_entry ce, *class_entry;
+
+	INIT_CLASS_ENTRY(ce, "WeakReference", class_WeakReference_methods);
+	class_entry = zend_register_internal_class_ex(&ce, NULL);
+	class_entry->ce_flags |= ZEND_ACC_FINAL|ZEND_ACC_NO_DYNAMIC_PROPERTIES;
+
+	return class_entry;
+}
+
+static zend_class_entry *register_class_WeakMap(zend_class_entry *class_entry_ArrayAccess, zend_class_entry *class_entry_Countable, zend_class_entry *class_entry_IteratorAggregate)
+{
+	zend_class_entry ce, *class_entry;
+
+	INIT_CLASS_ENTRY(ce, "WeakMap", class_WeakMap_methods);
+	class_entry = zend_register_internal_class_ex(&ce, NULL);
+	class_entry->ce_flags |= ZEND_ACC_FINAL|ZEND_ACC_NO_DYNAMIC_PROPERTIES;
+	zend_class_implements(class_entry, 3, class_entry_ArrayAccess, class_entry_Countable, class_entry_IteratorAggregate);
+
+	return class_entry;
+}

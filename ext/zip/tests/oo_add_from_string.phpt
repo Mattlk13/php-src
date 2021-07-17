@@ -1,9 +1,10 @@
 --TEST--
 ziparchive::addFromString and FL_OVERWRITE
+--EXTENSIONS--
+zip
 --SKIPIF--
 <?php
 /* $Id$ */
-if(!extension_loaded('zip')) die('skip');
 ?>
 --FILE--
 <?php
@@ -44,7 +45,7 @@ $dirname = __DIR__ . '/oo_add_from_string_dir/';
 unlink($dirname . 'tmp.zip');
 rmdir($dirname);
 ?>
---EXPECTF--
+--EXPECT--
 bool(true)
 bool(true)
 bool(false)

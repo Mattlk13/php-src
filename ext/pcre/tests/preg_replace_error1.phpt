@@ -56,4 +56,4 @@ string(1) "a"
 
 Arg value is /[a-zA-Z]/
 string(1) "1"
-Object of class stdClass could not be converted to string
+preg_replace(): Argument #1 ($pattern) must be of type array|string, stdClass given

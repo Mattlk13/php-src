@@ -1,8 +1,7 @@
 --TEST--
 openssl_cms_encrypt() pem test
---SKIPIF--
-<?php if (!extension_loaded("openssl")) print "skip";
-?>
+--EXTENSIONS--
+openssl
 --FILE--
 <?php
 $infile = __DIR__ . "/plain.txt";
@@ -41,7 +40,7 @@ if (file_exists($decryptfile)) {
 }
 unlink($tname);
 ?>
---EXPECTF--
+--EXPECT--
 bool(true)
 Now is the winter of our discontent.
 true

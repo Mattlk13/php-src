@@ -1,5 +1,7 @@
 --TEST--
 oci_lob_free()/close()
+--EXTENSIONS--
+oci8
 --SKIPIF--
 <?php
 $target_dbs = array('oracledb' => true, 'timesten' => false);  // test runs on these DBs
@@ -43,7 +45,7 @@ require __DIR__.'/drop_table.inc';
 echo "Done\n";
 
 ?>
---EXPECTF--
+--EXPECT--
 int(4)
 bool(true)
 int(4)

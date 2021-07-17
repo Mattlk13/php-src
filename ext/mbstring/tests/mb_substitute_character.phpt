@@ -1,7 +1,7 @@
 --TEST--
 mb_substitute_character()
---SKIPIF--
-<?php extension_loaded('mbstring') or die('skip mbstring not available'); ?>
+--EXTENSIONS--
+mbstring
 --FILE--
 <?php
 
@@ -42,4 +42,4 @@ string(4) "82a0"
 bool(true)
 string(6) "entity"
 string(20) "262378323636303b82a0"
-mb_substitute_character(): Argument #1 ($substitute_character) must be 'none', 'long', 'entity' or a valid codepoint
+mb_substitute_character(): Argument #1 ($substitute_character) must be "none", "long", "entity" or a valid codepoint

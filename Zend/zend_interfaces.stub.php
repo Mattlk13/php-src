@@ -1,6 +1,6 @@
 <?php
 
-/** @generate-function-entries */
+/** @generate-class-entries */
 
 interface Traversable {}
 
@@ -31,26 +31,28 @@ interface Iterator extends Traversable
 interface ArrayAccess
 {
     /** @return bool */
-    public function offsetExists($offset);
+    public function offsetExists(mixed $offset);
 
-    /* actually this should be return by ref but atm cannot be */
-    /** @return mixed */
-    public function offsetGet($offset);
+    /**
+     * Actually this should be return by ref but atm cannot be.
+     * @return mixed
+     */
+    public function offsetGet(mixed $offset);
 
     /** @return void */
-    public function offsetSet($offset, $value);
+    public function offsetSet(mixed $offset, mixed $value);
 
     /** @return void */
-    public function offsetUnset($offset);
+    public function offsetUnset(mixed $offset);
 }
 
 interface Serializable
 {
-    /** @return string */
+    /** @return string|null */
     public function serialize();
 
     /** @return void */
-    public function unserialize(string $serialized);
+    public function unserialize(string $data);
 }
 
 interface Countable

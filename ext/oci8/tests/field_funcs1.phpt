@@ -1,7 +1,7 @@
 --TEST--
 oci_field_*() family: error cases
---SKIPIF--
-<?php if (!extension_loaded('oci8')) die("skip no oci8 extension"); ?>
+--EXTENSIONS--
+oci8
 --FILE--
 <?php
 
@@ -49,15 +49,6 @@ var_dump(oci_field_type_raw($s, "none"));
 var_dump(oci_field_scale($s, "none"));
 var_dump(oci_field_precision($s, "none"));
 var_dump(oci_field_size($s, "none"));
-
-echo "Test 4\n";
-var_dump(oci_field_is_null($s, array()));
-var_dump(oci_field_name($s, array()));
-var_dump(oci_field_type($s, array()));
-var_dump(oci_field_type_raw($s, array()));
-var_dump(oci_field_scale($s, array()));
-var_dump(oci_field_precision($s, array()));
-var_dump(oci_field_size($s, array()));
 
 // Cleanup
 
@@ -120,27 +111,5 @@ Warning: oci_field_precision(): Invalid column name "none" in %s on line %d
 bool(false)
 
 Warning: oci_field_size(): Invalid column name "none" in %s on line %d
-bool(false)
-Test 4
-
-Warning: oci_field_is_null(): Invalid column index "0" in %s on line %d
-bool(false)
-
-Warning: oci_field_name(): Invalid column index "0" in %s on line %d
-bool(false)
-
-Warning: oci_field_type(): Invalid column index "0" in %s on line %d
-bool(false)
-
-Warning: oci_field_type_raw(): Invalid column index "0" in %s on line %d
-bool(false)
-
-Warning: oci_field_scale(): Invalid column index "0" in %s on line %d
-bool(false)
-
-Warning: oci_field_precision(): Invalid column index "0" in %s on line %d
-bool(false)
-
-Warning: oci_field_size(): Invalid column index "0" in %s on line %d
 bool(false)
 Done

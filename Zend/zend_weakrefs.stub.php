@@ -1,29 +1,27 @@
 <?php
 
-/** @generate-function-entries */
+/** @generate-class-entries */
 
+/** @strict-properties */
 final class WeakReference
 {
     public function __construct() {}
 
-    public static function create(): WeakReference {}
+    public static function create(object $object): WeakReference {}
 
     public function get(): ?object {}
 }
 
+/** @strict-properties */
 final class WeakMap implements ArrayAccess, Countable, IteratorAggregate
 {
     /**
      * @param object $object
-     * @return mixed
      */
-    public function offsetGet($object) {}
+    public function offsetGet($object): mixed {}
 
-    /**
-     * @param object $object
-     * @param mixed $value
-     */
-    public function offsetSet($object, $value): void {}
+    /** @param object $object */
+    public function offsetSet($object, mixed $value): void {}
 
     /** @param object $object */
     public function offsetExists($object): bool {}

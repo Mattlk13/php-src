@@ -1,9 +1,7 @@
 --TEST--
 Test imap_binary() function : basic functionality
---SKIPIF--
-<?php
-extension_loaded('imap') or die('skip imap extension not available in this build');
-?>
+--EXTENSIONS--
+imap
 --FILE--
 <?php
 echo "*** Testing imap_binary() : basic functionality ***\n";
@@ -29,7 +27,7 @@ $base64 = imap_binary($hex);
 var_dump(bin2hex($base64));
 
 ?>
---EXPECTF--
+--EXPECT--
 *** Testing imap_binary() : basic functionality ***
 Encode as short string
 string(136) "5647687063794270637942686269426c654746746347786c49484e30636d6c755a794230627942695a53426959584e6c49445930494756755932396b0d0a5a57513d0d0a"

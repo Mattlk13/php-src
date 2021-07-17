@@ -1,5 +1,7 @@
 --TEST--
 Collection trim tests
+--EXTENSIONS--
+oci8
 --SKIPIF--
 <?php
 $target_dbs = array('oracledb' => true, 'timesten' => false);  // test runs on these DBs
@@ -52,7 +54,7 @@ echo "Done\n";
 require __DIR__."/drop_type.inc";
 
 ?>
---EXPECTF--
+--EXPECT--
 Test 2.
 bool(true)
 

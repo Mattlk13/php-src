@@ -1,7 +1,7 @@
 --TEST--
 openssl_cms_sign() and verify with attached signatures
---SKIPIF--
-<?php if (!extension_loaded("openssl")) print "skip"; ?>
+--EXTENSIONS--
+openssl
 --FILE--
 <?php
 $infile = __DIR__ . "/plain.txt";
@@ -72,7 +72,7 @@ if (file_exists($vout)) {
 }
 
 ?>
---EXPECTF--
+--EXPECT--
 S/MIME attached
 Plain text:
 Now is the winter of our discontent.

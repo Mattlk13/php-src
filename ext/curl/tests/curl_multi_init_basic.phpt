@@ -3,8 +3,8 @@ Test curl_multi_init()
 --CREDITS--
 Mark van der Velden
 #testfest Utrecht 2009
---SKIPIF--
-<?php if (!extension_loaded("curl")) print "skip"; ?>
+--EXTENSIONS--
+curl
 --FILE--
 <?php
 
@@ -18,7 +18,7 @@ var_dump($mh);
 curl_multi_close($mh);
 var_dump($mh);
 ?>
---EXPECTF--
+--EXPECT--
 *** Testing curl_multi_init(void); ***
 object(CurlMultiHandle)#1 (0) {
 }

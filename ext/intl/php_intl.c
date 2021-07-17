@@ -3,7 +3,7 @@
    | This source file is subject to version 3.01 of the PHP license,      |
    | that is bundled with this package in the file LICENSE, and is        |
    | available through the world-wide-web at the following url:           |
-   | http://www.php.net/license/3_01.txt                                  |
+   | https://www.php.net/license/3_01.txt                                 |
    | If you did not receive a copy of the PHP license and are unable to   |
    | obtain it through the world-wide-web, please send a note to          |
    | license@php.net so we can mail you a copy immediately.               |
@@ -47,6 +47,7 @@
 #include "dateformat/dateformat.h"
 #include "dateformat/dateformat_class.h"
 #include "dateformat/dateformat_data.h"
+#include "dateformat/datepatterngenerator_class.h"
 
 #include "resourcebundle/resourcebundle_class.h"
 
@@ -97,8 +98,8 @@ const char *intl_locale_get_default( void )
 
 /* {{{ INI Settings */
 PHP_INI_BEGIN()
-    STD_PHP_INI_ENTRY(LOCALE_INI_NAME, NULL, PHP_INI_ALL, OnUpdateStringUnempty, default_locale, zend_intl_globals, intl_globals)
-    STD_PHP_INI_ENTRY("intl.error_level", "0", PHP_INI_ALL, OnUpdateLong, error_level, zend_intl_globals, intl_globals)
+	STD_PHP_INI_ENTRY(LOCALE_INI_NAME, NULL, PHP_INI_ALL, OnUpdateStringUnempty, default_locale, zend_intl_globals, intl_globals)
+	STD_PHP_INI_ENTRY("intl.error_level", "0", PHP_INI_ALL, OnUpdateLong, error_level, zend_intl_globals, intl_globals)
 	STD_PHP_INI_BOOLEAN("intl.use_exceptions", "0", PHP_INI_ALL, OnUpdateBool, use_exceptions, zend_intl_globals, intl_globals)
 PHP_INI_END()
 /* }}} */
@@ -141,8 +142,7 @@ static PHP_GINIT_FUNCTION(intl)
 }
 /* }}} */
 
-/* {{{ PHP_MINIT_FUNCTION
- */
+/* {{{ PHP_MINIT_FUNCTION */
 PHP_MINIT_FUNCTION( intl )
 {
 	/* For the default locale php.ini setting */
@@ -188,6 +188,9 @@ PHP_MINIT_FUNCTION( intl )
 	/* Expose DateFormat constants to PHP scripts */
 	dateformat_register_constants( INIT_FUNC_ARGS_PASSTHRU );
 
+	/* Register 'IntlDateTimeFormatter' PHP class */
+	dateformat_register_IntlDatePatternGenerator_class(  );
+
 	/* Register 'ResourceBundle' PHP class */
 	resourcebundle_register_class( );
 
@@ -216,7 +219,8 @@ PHP_MINIT_FUNCTION( intl )
 	spoofchecker_register_constants( INIT_FUNC_ARGS_PASSTHRU );
 
 	/* Register 'IntlException' PHP class */
-	intl_register_IntlException_class(  );
+	IntlException_ce_ptr = register_class_IntlException(zend_ce_exception);
+	IntlException_ce_ptr->create_object = zend_ce_exception->create_object;
 
 	/* Register 'IntlIterator' PHP class */
 	intl_register_IntlIterator_class(  );
@@ -225,7 +229,7 @@ PHP_MINIT_FUNCTION( intl )
 	breakiterator_register_BreakIterator_class(  );
 
 	/* Register 'IntlPartsIterator' class */
-	breakiterator_register_IntlPartsIterator_class(  );
+	breakiterator_register_IntlPartsIterator_class();
 
 	/* Global error handling. */
 	intl_error_init( NULL );
@@ -242,38 +246,33 @@ PHP_MINIT_FUNCTION( intl )
 
 #define EXPLICIT_CLEANUP_ENV_VAR "INTL_EXPLICIT_CLEANUP"
 
-/* {{{ PHP_MSHUTDOWN_FUNCTION
- */
+/* {{{ PHP_MSHUTDOWN_FUNCTION */
 PHP_MSHUTDOWN_FUNCTION( intl )
 {
 	const char *cleanup;
-    /* For the default locale php.ini setting */
-    UNREGISTER_INI_ENTRIES();
+	/* For the default locale php.ini setting */
+	UNREGISTER_INI_ENTRIES();
 
 	cleanup = getenv(EXPLICIT_CLEANUP_ENV_VAR);
-    if (cleanup != NULL && !(cleanup[0] == '0' && cleanup[1] == '\0')) {
+	if (cleanup != NULL && !(cleanup[0] == '0' && cleanup[1] == '\0')) {
 		u_cleanup();
-    }
+	}
 
-    return SUCCESS;
+	return SUCCESS;
 }
 /* }}} */
 
-/* {{{ PHP_RINIT_FUNCTION
- */
+/* {{{ PHP_RINIT_FUNCTION */
 PHP_RINIT_FUNCTION( intl )
 {
 	return SUCCESS;
 }
 /* }}} */
 
-/* {{{ PHP_RSHUTDOWN_FUNCTION
- */
+/* {{{ PHP_RSHUTDOWN_FUNCTION */
 PHP_RSHUTDOWN_FUNCTION( intl )
 {
-	if(!Z_ISUNDEF(INTL_G(current_collator))) {
-		ZVAL_UNDEF(&INTL_G(current_collator));
-	}
+	INTL_G(current_collator) = NULL;
 	if (INTL_G(grapheme_iterator)) {
 		grapheme_close_global_iterator(  );
 		INTL_G(grapheme_iterator) = NULL;
@@ -284,8 +283,7 @@ PHP_RSHUTDOWN_FUNCTION( intl )
 }
 /* }}} */
 
-/* {{{ PHP_MINFO_FUNCTION
- */
+/* {{{ PHP_MINFO_FUNCTION */
 PHP_MINFO_FUNCTION( intl )
 {
 #ifndef UCONFIG_NO_FORMATTING
@@ -308,7 +306,7 @@ PHP_MINFO_FUNCTION( intl )
 	php_info_print_table_row( 2, "ICU Unicode version", U_UNICODE_VERSION );
 	php_info_print_table_end();
 
-    /* For the default locale php.ini setting */
-    DISPLAY_INI_ENTRIES() ;
+	/* For the default locale php.ini setting */
+	DISPLAY_INI_ENTRIES() ;
 }
 /* }}} */

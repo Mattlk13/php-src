@@ -5,7 +5,7 @@
    | This source file is subject to version 3.01 of the PHP license,      |
    | that is bundled with this package in the file LICENSE, and is        |
    | available through the world-wide-web at the following url:           |
-   | http://www.php.net/license/3_01.txt                                  |
+   | https://www.php.net/license/3_01.txt                                 |
    | If you did not receive a copy of the PHP license and are unable to   |
    | obtain it through the world-wide-web, please send a note to          |
    | license@php.net so we can mail you a copy immediately.               |
@@ -31,7 +31,7 @@
 * Since:
 */
 
-/* {{{ proto DOMText::__construct([string value]); */
+/* {{{ */
 PHP_METHOD(DOMText, __construct)
 {
 	xmlNodePtr nodep = NULL, oldnode = NULL;
@@ -47,7 +47,7 @@ PHP_METHOD(DOMText, __construct)
 
 	if (!nodep) {
 		php_dom_throw_error(INVALID_STATE_ERR, 1);
-		RETURN_FALSE;
+		RETURN_THROWS();
 	}
 
 	intern = Z_DOMOBJ_P(ZEND_THIS);
@@ -74,7 +74,7 @@ int dom_text_whole_text_read(dom_object *obj, zval *retval)
 	node = dom_object_get_node(obj);
 
 	if (node == NULL) {
-		php_dom_throw_error(INVALID_STATE_ERR, 0);
+		php_dom_throw_error(INVALID_STATE_ERR, 1);
 		return FAILURE;
 	}
 
@@ -101,8 +101,7 @@ int dom_text_whole_text_read(dom_object *obj, zval *retval)
 
 /* }}} */
 
-/* {{{ proto DOMText dom_text_split_text(int offset)
-URL: http://www.w3.org/TR/2003/WD-DOM-Level-3-Core-20030226/DOM3-Core.html#core-ID-38853C1D
+/* {{{ URL: http://www.w3.org/TR/2003/WD-DOM-Level-3-Core-20030226/DOM3-Core.html#core-ID-38853C1D
 Since:
 */
 PHP_METHOD(DOMText, splitText)
@@ -123,17 +122,25 @@ PHP_METHOD(DOMText, splitText)
 	}
 	DOM_GET_OBJ(node, id, xmlNodePtr, intern);
 
+	if (offset < 0) {
+		zend_argument_value_error(1, "must be greater than or equal to 0");
+		RETURN_THROWS();
+	}
+
 	if (node->type != XML_TEXT_NODE && node->type != XML_CDATA_SECTION_NODE) {
+		/* TODO Add warning? */
 		RETURN_FALSE;
 	}
 
 	cur = xmlNodeGetContent(node);
 	if (cur == NULL) {
+		/* TODO Add warning? */
 		RETURN_FALSE;
 	}
 	length = xmlUTF8Strlen(cur);
 
-	if (ZEND_LONG_INT_OVFL(offset) || (int)offset > length || offset < 0) {
+	if (ZEND_LONG_INT_OVFL(offset) || (int)offset > length) {
+		/* TODO Add warning? */
 		xmlFree(cur);
 		RETURN_FALSE;
 	}
@@ -150,6 +157,7 @@ PHP_METHOD(DOMText, splitText)
 	xmlFree(second);
 
 	if (nnode == NULL) {
+		/* TODO Add warning? */
 		RETURN_FALSE;
 	}
 
@@ -163,8 +171,7 @@ PHP_METHOD(DOMText, splitText)
 }
 /* }}} end dom_text_split_text */
 
-/* {{{ proto bool dom_text_is_whitespace_in_element_content()
-URL: http://www.w3.org/TR/2003/WD-DOM-Level-3-Core-20030226/DOM3-Core.html#core-Text3-isWhitespaceInElementContent
+/* {{{ URL: http://www.w3.org/TR/2003/WD-DOM-Level-3-Core-20030226/DOM3-Core.html#core-Text3-isWhitespaceInElementContent
 Since: DOM Level 3
 */
 PHP_METHOD(DOMText, isWhitespaceInElementContent)

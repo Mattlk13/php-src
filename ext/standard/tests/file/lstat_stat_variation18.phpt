@@ -1,11 +1,5 @@
 --TEST--
 Test lstat() and stat() functions: usage variations - dir/file name stored in object
---SKIPIF--
-<?php
-if (substr(PHP_OS, 0, 3) == 'WIN') {
-    die('skip.. Not valid for Windows');
-}
-?>
 --FILE--
 <?php
 /* test for stats of dir/file when their names are stored in objects */
@@ -56,7 +50,7 @@ rmdir("$file_path/lstat_stat_variation18");
 -- Testing stat() on filename stored inside an object --
 array(26) {
   [0]=>
-  int(%d)
+  int(%i)
   [1]=>
   int(%d)
   [2]=>
@@ -78,11 +72,11 @@ array(26) {
   [10]=>
   int(%d)
   [11]=>
-  int(%d)
+  int(%i)
   [12]=>
-  int(%d)
+  int(%i)
   ["dev"]=>
-  int(%d)
+  int(%i)
   ["ino"]=>
   int(%d)
   ["mode"]=>
@@ -104,15 +98,15 @@ array(26) {
   ["ctime"]=>
   int(%d)
   ["blksize"]=>
-  int(%d)
+  int(%i)
   ["blocks"]=>
-  int(%d)
+  int(%i)
 }
 
 -- Testing stat() on directory name stored inside an object --
 array(26) {
   [0]=>
-  int(%d)
+  int(%i)
   [1]=>
   int(%d)
   [2]=>
@@ -134,11 +128,11 @@ array(26) {
   [10]=>
   int(%d)
   [11]=>
-  int(%d)
+  int(%i)
   [12]=>
-  int(%d)
+  int(%i)
   ["dev"]=>
-  int(%d)
+  int(%i)
   ["ino"]=>
   int(%d)
   ["mode"]=>
@@ -160,9 +154,9 @@ array(26) {
   ["ctime"]=>
   int(%d)
   ["blksize"]=>
-  int(%d)
+  int(%i)
   ["blocks"]=>
-  int(%d)
+  int(%i)
 }
 
 --- Done ---

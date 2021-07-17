@@ -1,5 +1,7 @@
 --TEST--
 LOB method aliases
+--EXTENSIONS--
+oci8
 --SKIPIF--
 <?php
 $target_dbs = array('oracledb' => true, 'timesten' => false);  // test runs on these DBs
@@ -34,7 +36,7 @@ var_dump(function_exists('oci_free_descriptor'));
 echo "Done\n";
 
 ?>
---EXPECTF--
+--EXPECT--
 Test 1
 bool(true)
 bool(true)
